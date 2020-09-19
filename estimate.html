@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" charset="utf-8">
+    <title>YOKOITO Printing 見積もり</title>
+    <script src="ie_polyfills.js"></script>
+    <link href="skeleton.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <br><br>
+        <h5>YOKOITO Printing 見積もりツール</h5>
+        <div id="stl_cont" style="height:600px;border:1px dashed black; margin-top: 20px; margin-bottom: 20px;"></div>
+        <script src="/general/jszip.min.js"></script>
+        <script src="/general/jszip-utils.min.js"></script>
+        <script src="stl_viewer.min.js"></script>
+        <script src="calculate.js"></script>
+
+        <script>
+            var camera_state = null;
+            var stl_viewer = new StlViewer
+                (
+                    document.getElementById("stl_cont"),
+                    {
+                        allow_drag_and_drop: true,
+                        all_loaded_callback: loaded,
+                    }
+                );
+        </script>
+    </div>
+
+    <div class="container">
+        <input class="twelve columns" type="button" onclick=stl_viewer.clean(),loaded() value="クリア">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="four columns">
+                <label for="exampleEmailInput">素材</label>
+                <select class="u-full-width" id="mat" onchange="calculate()">
+                    <option>ホワイト</option>
+                    <option>クリア</option>
+                    <option>ABSライク</option>
+                    <option>PEライク</option>
+                    <option>PPライク</option>
+                    <option>シリコンライク</option>
+                    <option>耐熱</option>
+                    <option>ワックス</option>
+                </select>
+            </div>
+            <div class="four columns">
+                <label for="exampleEmailInput">ピッチ</label>
+                <select class="u-full-width" id="pitch" onchange="calculate()">
+                    <option>標準</option>
+                    <option>高精細</option>
+                    <option>超高精細</option>
+                </select>
+            </div>
+            <div class="four columns">
+                <label for="exampleEmailInput">出力回数</label>
+                <input id="printnum" class="u-full-width" type="number" min="1" max="100" value="1"
+                    onchange="calculate()">
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <div class="container" id="stl">
+    </div>
+
+    <div class="container" id="test1">
+    </div>
+
+</body>
+
+</html>
